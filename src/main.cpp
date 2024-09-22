@@ -36,11 +36,10 @@ string binaryToHex (const string& strNumber);
 int main () {
 
   cout << "Hello World" << endl;
-  cout << binaryToDecimal ("0") << endl;
-  cout << binaryToDecimal ("1") << endl;
-  cout << binaryToDecimal ("1101") << endl;
-  cout << binaryToDecimal ("11111") << endl;
-  cout << binaryToDecimal ("000101010101") << endl;
+  cout << hexToDecimal(decimalToHex("0")) << endl;
+  cout << hexToDecimal(decimalToHex("255")) << endl;
+  cout << hexToDecimal(decimalToHex("65536")) << endl;
+  cout << hexToDecimal(decimalToHex("283754")) << endl;
   return EXIT_SUCCESS;
 }
 
@@ -106,13 +105,53 @@ string binaryToDecimal (const string& strNumber)
 
 string decimalToBinary (const string& strNumber)
 {
-  
+  int decimalNumber = stoi(strNumber);
+  string binaryString = "";
+  do
+  {
+    binaryString = to_string(decimalNumber % 2) + binaryString;
+    decimalNumber = decimalNumber / 2;
+  } while (decimalNumber != 0);
+  return binaryString;
 }
 
-string decimalToHex (const string& strNumber);
+string decimalToHex (const string& strNumber)
+{
+  const string ARRAY_HEX_DIGITS[16] = {"0", "1", "2", "3", "4", "5", "6", "7", 
+                                       "8", "9", "A", "B", "C", "D", "E", "F"};
+  
+  int decimalNumber = stoi(strNumber);
+  string hexString = "";
+  do
+  {
+    hexString = ARRAY_HEX_DIGITS[decimalNumber % 16] + hexString;
+    decimalNumber = decimalNumber / 16;
+  } while (decimalNumber != 0);
+  return hexString;
+}
 
-string hexToDecimal (const string& strNumber);
+string hexToDecimal (const string& strNumber)
+{
+  int numDigits = strNumber.length ();
+  int sum = 0;
+  
+  int power = 0;
 
-string hexToBinary (const string& strNumber);
+  for (int i = numDigits - 1; i >= 0; i--)
+  {
+    sum += pow(16,power) * hexCharToInt(strNumber[i]);
+    power++;
+  }
 
-string binaryToHex (const string& strNumber);
+  return to_string (sum);
+}
+
+string hexToBinary (const string& strNumber)
+{
+  return decimalToBinary(hexToDecimal(strNumber));
+}
+
+string binaryToHex (const string& strNumber)
+{
+  return decimalToHex(binaryToDecimal(strNumber));
+}
