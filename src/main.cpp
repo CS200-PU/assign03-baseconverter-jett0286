@@ -13,6 +13,12 @@
 
 using namespace std;
 
+#define TITLE "**************************************\n\
+*****HEX-DECIMAL-BINARY CONVERTER*****\n\
+**************************************"
+
+#define PROMPT "Enter your string to convert (q to quit): "
+
 int hexCharToInt (char hexDigit);
 
 char getBase (const string& strNumber);
@@ -34,13 +40,48 @@ string hexToBinary (const string& strNumber);
 string binaryToHex (const string& strNumber);
 
 int main () {
+  printTitle (TITLE);
+  string inputString;
+  char baseOfInput;
 
-  cout << "Hello World" << endl;
-  cout << hexToDecimal(decimalToHex("0")) << endl;
-  cout << hexToDecimal(decimalToHex("255")) << endl;
-  cout << hexToDecimal(decimalToHex("65536")) << endl;
-  cout << hexToDecimal(decimalToHex("283754")) << endl;
-  return EXIT_SUCCESS;
+  while (true)
+  {
+    cout << endl;
+    inputString = getNumber (PROMPT);
+    if (inputString == "q")
+    {
+      exit(EXIT_SUCCESS);
+    }
+
+    baseOfInput = getBase (inputString);
+
+    if (baseOfInput != 'D')
+    {
+      inputString.erase (0,2); // get rid of base indicator
+    }
+
+    switch (baseOfInput)
+    {
+      case 'D':
+        cout << "The binary conversion is: " << 
+                "0b" + decimalToBinary (inputString) << endl;
+        cout << "The hexadecimal conversion is: " << 
+                "0x" + decimalToHex (inputString) << endl;
+        break;
+      case 'H':
+        cout << "The decimal conversion is: " << 
+                hexToDecimal (inputString) << endl;
+        cout << "The binary conversion is: " << 
+                "0b" + hexToBinary (inputString) << endl;
+        break;
+      case 'B':
+        cout << "The decimal conversion is: " << 
+                binaryToDecimal (inputString) << endl;
+        cout << "The hexadecimal conversion is: " << 
+                "0x" + binaryToHex (inputString) << endl;
+        break;
+    }
+  }
 }
 
 int hexCharToInt (char hexDigit)
