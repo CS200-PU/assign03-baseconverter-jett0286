@@ -40,9 +40,10 @@ string hexToBinary (const string& strNumber);
 string binaryToHex (const string& strNumber);
 
 int main () {
-  printTitle (TITLE);
   string inputString;
   char baseOfInput;
+
+  printTitle (TITLE);
 
   while (true)
   {
@@ -54,12 +55,10 @@ int main () {
     }
 
     baseOfInput = getBase (inputString);
-
     if (baseOfInput != 'D')
     {
       inputString.erase (0,2); // get rid of base indicator
     }
-
     switch (baseOfInput)
     {
       case 'D':
@@ -160,7 +159,6 @@ string decimalToHex (const string& strNumber)
 {
   const string ARRAY_HEX_DIGITS[16] = {"0", "1", "2", "3", "4", "5", "6", "7", 
                                        "8", "9", "A", "B", "C", "D", "E", "F"};
-  
   int decimalNumber = stoi(strNumber);
   string hexString = "";
   do
